@@ -63,14 +63,70 @@ tweet2 = re.sub(r'#', '', tweet2) #remove hashtags #only removing the hash # sig
 
 print(tweet2)
 
-#TOKENIZE THE STRING
+#TOKENIZE THE STRING USING THE "TOKENIZE" MODULE FROM NLTK
+print()
+print('\033[92m' + tweet2)
+print('\033[94m')
 
+tokenizer = TweetTokenizer(preserve_case = False, strip_handles = True, reduce_len = True) #instantiating tokenizer class
+tweet_tokens = tokenizer.tokenize(tweet2) #tokenize tweets
 
+print()
+print('Tokenized string:')
+print(tweet_tokens)
 
+#REMOVE STOP WORDS AND PUNCTUATIONS
+stopwords_english = stopwords.words('english')
 
+print('Stop words\n')
+print(stopwords_english)
 
+print('\nPunctuation\n')
+print(string.punctuation)
 
+#CLEANING UP TOKENIZED TWEET
 
+print()
+print('\033[92m')
+print(tweet_tokens)
+print('\033[94m')
+
+tweets_clean = []
+
+for word in tweet_tokens: #Go through every word in your tokens list
+  if (word not in stopwords_english and   #remove stopwords
+      word not in string.punctuation):     #remove punctuation
+      tweets_clean.append(word)
+
+print('removed stop words and punctuation:')
+print(tweets_clean)
+
+#STEMMING
+print()
+print('\033[92m')
+print(tweets_clean)
+print('\022[94m')
+
+stemmer = PorterStemmer() #instantiating stemming class #The PorterStemmer module uses the Porter Stemming Algorithm
+
+tweets_stem = [] #Create an empty list to store the stems
+
+for word in tweets_clean:
+  stem_word = stemmer.stem(word) #stemming word
+  tweets_stem.append(stem_word) #append to the list
+
+print('stemmed words:')
+print(tweets_stem)
+
+#Calling the function process_tweet()
+from utils import process_tweet #Importing the process_tweet function
+
+tweet = all_positive_tweets[2277]
+
+print()
+print('\033[92m')
+print(tweet)
+print('033[94m')
 
 #CALLING THE IMPORTED FUNCTION " "
 tweets_stem = process_tweet(tweet); #Preprocess a given tweet
