@@ -135,8 +135,13 @@ print('preprocessed tweet:')
 print(tweets_stem) #Print the result
 
 
-
-
+---------------for m tweets---------------------
+freqs = build_freqs(tweets, labels) #Build frequencies dictionary
+X = np.zeros((m,3)) #Initialize matrix X
+for i in range(m):  #For every tweet
+        p_tweet = process_tweet(tweets[i]) # Process tweet
+    X[i,:] = extract_features(p_tweet,freqs) #Extract Features
+---------------------------------------------------------------
 
 
 
