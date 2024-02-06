@@ -1,1 +1,94 @@
+import nltk
+from nltk.corpus import twitter_samples
+import matplotlib.pyplot as plt
+import random  #to generate pseudo-random number
+
+nltk.download('twitter_samples') #downloading the sample twitter dataset
+
+all_positive_tweets =  twitter_samples.strings('positive_tweets.json')  #select all the positive tweets
+all_negative_tweets = twitter_samples.strings('negative_tweets.json')  #select all the negative tweets
+
+print('Number of positive tweets: ', len(all_positive_tweets))  #print the number of positive tweets
+print('Number of negative tweets: ', len(all_negative_tweets))  #print the number of negative tweets
+
+print('\n The type of all_positive_tweets is: ',type(all_positive_tweets)) #print the type of positive tweets #'\n': to start on a new line
+print('The type of all_negative_tweets is: ', type(all_negative_tweets))    #print the type of negative tweets
+
+#PLOT THE INFO IN A PIE CHART
+fig = plt.figure(figsize=(5,5))  #Declare a new figure with its size
+labels = 'Positives', 'Negative'  #Labels for the two classes
+sizes = [len(all_positive_tweets), len(all_negative_tweets)]   #sizes 
+plt.pie(sizes, labels = labels, autopct = '%1.1f%%', shadow = True, startangle = 90)  #Declare pie chart, where the slices will be ordered and plotted counter-clockwise
+
+
+plt.axis('equal')  #Equal aspect ratio ensures that pie is drawn as a circle
+
+plt.show() #Display the chart
+
+
+#PRINTING RANDOM RAW TWEETS BEFORE PREPROCESSING; different color for each type
+
+print('\033[92m' +  all_positive_tweets[random.randint(0,5000)])  #print the random positive tweet in green
+print('\033[91m' + all_negative_tweets[random.randint(0, 5000)])  #print the random negative tweet in red
+
+#PREPROCESS RAW TEXT FOR SENTIMENT ANALYSIS (Why? tweets contain emojis etc.)
+#What is preprocessing? : cleaning, formatting the data before feeding into a ML Algorithm
+# Major steps? - Tokenizing the string, lowercasing, removing stop words and punctuation, stemming
+
+
+#SELECTING ONE POSITIVE TWEET TO CHECK OUT ITS CONTENTS
+tweet = all_positive_tweets[2277]
+print(tweet)
+
+#IMPORTING A FEW LIBRARIES FOR PREPROCESSING
+nltk.download('stopwords')
+
+import re #Library for regular expression operations
+import string #for string operations
+
+from nltk.corpus import stopwords #module for stop words that come with NLTK
+from nltk.stem import PorterStemmer #module for stemming
+from nltk.tokenize import TweetTokenizer #module for tokenizing strings
+
+#REMOVE HYPERLINKS, TWITTER MARKS AND STYLES
+#re(regular expressions) library #using the sub() method
+print('\033[92m' + tweet)
+print('\033[94m')
+
+tweet2 = re.sub(r'^RT[\s]+',  '', tweet) #remove old style retweet text "RT"
+
+re.sub(r'https?://[^\s\n\r]+', '', tweet2) #remove hyperlinks
+
+tweet2 = re.sub(r'#', '', tweet2) #remove hashtags #only removing the hash # sign from the word
+
+print(tweet2)
+
+#TOKENIZE THE STRING
+
+
+
+
+
+
+
+
+#CALLING THE IMPORTED FUNCTION " "
+tweets_stem = process_tweet(tweet); #Preprocess a given tweet
+
+print('preprocessed tweet:')
+print(tweets_stem) #Print the result
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
