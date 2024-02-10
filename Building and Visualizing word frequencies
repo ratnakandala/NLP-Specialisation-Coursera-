@@ -6,8 +6,8 @@ import nympy as np                      #Library for scientific computing and ma
 nltk.download('twitter_samples')
 
 #Helper functions in the utils.py file
-# process_tweet() : cleans the text, tokenizes it into separate words, removes stopwords, and converts words to stems
-# build_freqs() : counts how often a word in the 'corpus' (the entire set of tweets) was associated with a positive label 1 or a negative label 0.
+# process_tweet(): cleans the text, tokenizes it into separate words, removes stopwords, and converts words to stems
+# build_freqs(): counts how often a word in the 'corpus' (the entire set of tweets) was associated with a positive label 1 or a negative label 0.
 # It then builds the 'freqs' dictionary, where each key is a (word, label) tuple, and the value is the count of its frequency within the corpus of tweets.
 
 nltk.download('stopwords')                     #download the stopwords for the process_tweet function
@@ -17,5 +17,14 @@ LOAD THE NLTK SAMPLE (TWITTER) DATASET
 
 all_positive_tweets = twitter_samples.strings('positive_tweets.json')  #selecting all postiive tweets
 all_negative_tweets = twitter_samples.strings('negative_tweets.json')  #selecting all negative tweets
+
+tweets = all_positive_tweets + all_negative_tweets             #concatenate the lists, 1st part is the positive tweets followed by the negative
+
+print("Number of tweets: ", len(tweets))
+
+np.append(np.ones((len(all_positive_tweets))), np.zeros((len(all_negative_tweets))))    #Make a numpy array representing labels of the tweets
+
+#DICTIONARIES
+# What is a dictionary in Python? : a mutable and indexed collection; 
 
 
