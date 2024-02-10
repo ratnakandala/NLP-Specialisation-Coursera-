@@ -25,6 +25,34 @@ print("Number of tweets: ", len(tweets))
 np.append(np.ones((len(all_positive_tweets))), np.zeros((len(all_negative_tweets))))    #Make a numpy array representing labels of the tweets
 
 #DICTIONARIES
-# What is a dictionary in Python? : a mutable and indexed collection; 
+# What is a dictionary in Python? :
+# a mutable and indexed collection; 
+# stores items as key-value pairs and uses hash tables underneath to allow practically constant time lookups.
+# Why are they essential?  Enables fast retrieval of items or containment checks even with thousands of entries in the collection.
+
+dictionary = {'key1': 1, 'key2': 2}
+
+# ADDING OR EDITING ENTRIES
+dictionary['key3'] = -5   # add a new entry
+dictionary['key1'] = 0     #Overwrite the value of key1
+print(dictionary)
+
+
+#ACCESSING VALUES AND LOOKUP KEYS
+print(dictionary['key2']) #Square bracket lookup when the key exist
+print(dictionary['key8'])  #The output of this line is intended to produce a KeyError
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
