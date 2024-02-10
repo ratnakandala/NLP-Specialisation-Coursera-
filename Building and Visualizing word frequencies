@@ -57,13 +57,111 @@ else:
 
 print(dictionary.get('key7', -1)) #This prints -1 because the key is not found and we set the default to -1
 
-
+--------------------------------------------------------------------------------------------------------------------
 #WORD FREQUENCY DICTIONARY  
+# build_freqs() FUNCTION IN utils.py
+
+def build_freqs(tweets, ys):
+    """Build frequencies.
+    Input:
+        tweets: a list of tweets
+        ys: an m x 1 array with the sentiment label of each tweet
+            (either 0 or 1)
+    Output:
+        freqs: a dictionary mapping each (word, sentiment) pair to its frequency
+    """
+
+#convert np array to list since zip needs an iterable.
+#The squeeze is necessary or the list ends up with one element.
+#Also, note that this is just a NOP if ys is already a list.
+yslist = np.squeeze(ys).tolist()
 
 
+#Start with an empty dictionary and populate it by looping over all tweets
+#and over all processed words in each tweet.
+freqs = {}
+for y, tweet in zip(yslist, tweets):
+    for word in process_tweet(tweet):
+        pair = (word,y)
+        if pair in freqs:
+            freqs[pair] += 1
+        else:
+            freqs[pair] = 1
+
+# MORE COMPACT FOR LOOP:
+for y, tweet in zip(yslist, tweets):
+    for word in process_tweet(tweet):
+        pair = (word, y)
+        freqs[pair] = freqs.get(pair, 0) + 1
+---------------------------------------------------------------------------------------------------------------------
 
 
+#Create frquency dictionary
+freqs = build_freqs(tweets, labels)
 
+#Check data type
+print(f'type(freqs) = {type(freqs)}')
+
+#check length of the dictionary
+print(f'len(freqs) = {len(freqs)}')
+
+#Print the frequency of each word depending on the class
+print(freqs)
+
+#TABLE OF WORD COUNTS
+# select some words to appear in the report. we will assume that each word is unique (i.e. no duplicates)
+keys = ['happi', 'merri', 'nice', 'good', 'bad', 'sad', 'mad', 'best', 'pretti',
+        '❤', ':)', ':(', '😒', '😬', '😄', '😍', '♛',
+        'song', 'idea', 'power', 'play', 'magnific']
+
+#list representing our table of word counts.
+#each element consists of a sublist with this pattern: [<word>, <positive_count>, <negative_count>]
+data =  []
+
+#loop through our selected words
+for word in keys:
+
+    #initialize positive and negative counts
+    pos  = 0
+    neg  = 0
+
+#retrieve number of positive counts
+if (word, 1) in freqs:
+    pod = freqs[(word, 1)]
+
+#retrieve number of negative counts
+if (word, 0) in freqs:
+    neg = freqs[(word, 1)]
+
+#retrieve number of negative counts
+if (word, 0) in freqs:
+    neg = freqs[(word, 0)]
+
+#append the word counts to the table
+data.append([word, pos, neg])
+
+data
+
+
+#Plotting this data as a scatter plot
+fig, ax = plt.subplots(figsize = (8,8))
+
+x = np.log([x[1] + 1 for x in data]) #convert positive raw counts to logarithmic scale. we add 1 to avoid log(0)
+
+y = np.log(x[2] + 1 for x in data)   #do the same for the negative counts
+
+ax.scatter(x,y)   #Plot a data for each pair of words
+
+#assign axis labels
+plt.xlabel("Log Positive Count")
+plt.ylabel("Log Negative Count")
+
+#Add the word as the label at the same position as you added the points just before 
+for i in range(0, len(data)):
+    ax.annotate(data[i][0], (x[i], y[i]), fontsize = 12)
+
+ax.plot([0,9], [0,9], color = 'red')    #Plot the red line that divides the 2 areas.
+plt.show()
 
 
 
