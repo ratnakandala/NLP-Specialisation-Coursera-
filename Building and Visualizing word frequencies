@@ -42,6 +42,24 @@ print(dictionary)
 print(dictionary['key2']) #Square bracket lookup when the key exist
 print(dictionary['key8'])  #The output of this line is intended to produce a KeyError
 
+if 'key1' in dictionary:
+    print("item found: ", dictionary['key1'])
+else:
+    print('key1 is not defined')
+
+print("item found: ", dictionary.get('key1', -1)) #Same as what you get with get
+
+#Printing a message because the key is not found
+if 'key7' in dictionary:
+    print(dictionary['key7'])
+else:
+    print('key does not exist!')
+
+print(dictionary.get('key7', -1)) #This prints -1 because the key is not found and we set the default to -1
+
+
+#WORD FREQUENCY DICTIONARY  
+
 
 
 
